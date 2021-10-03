@@ -6,6 +6,7 @@ class Brick
 public:
 	bool enable = true;
 	bool moveLeft = true;
+	bool destroyed = true;
 
 	int hp = 1;
 	float speed = 0;

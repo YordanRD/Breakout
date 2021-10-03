@@ -3,6 +3,8 @@
 #include <SFML/Audio.hpp>
 #include <vector>
 #include <math.h>
+#include <stdlib.h>
+
 
 #define _CRTDBG_MAP_ALLOC
 #define _CRTDBG_MAP_ALLOC_NEW
@@ -14,7 +16,6 @@
 #define new DBG_NEW
 #endif
 #endif
-
 
 #include "Paddle.h"
 #include "Ball.h"
@@ -44,7 +45,7 @@ bool win = false;
 
 int life = 3;
 int score = 0;
-int combo = 0;
+
 
 const float startposX = 55;
 const float startposY = 70;
@@ -57,8 +58,6 @@ RectangleShape background;
 Texture textureBack;
 Texture texturePaddle;
 Texture textureBrick;
-
-
 
 vector<Brick*> bricks;
 
@@ -90,20 +89,15 @@ int main()
 		deltaTime = gameClock.restart().asSeconds();
 		HandleInput();
 
-
 		if (isPlaying && !gameover && !win)
 		{
 			Update();
 		}
 
-
-
 		Render();
 	}
 
 	return EXIT_SUCCESS;
-
-
 }
 
 void Initiate()
@@ -122,7 +116,7 @@ void Initiate()
 	lifeText.setFont(font);
 	lifeText.setCharacterSize(20);
 	lifeText.setPosition(620, frameHeight - 30);
-	lifeText.setString("life:" + std::to_string(life));
+	lifeText.setString("Vida:" + std::to_string(life));
 
 	gameoverText.setFont(font);
 	gameoverText.setCharacterSize(35);
@@ -132,7 +126,7 @@ void Initiate()
 	scoreText.setFont(font);
 	scoreText.setCharacterSize(20);
 	scoreText.setPosition(80, frameHeight - 30);
-	scoreText.setString("score:" + std::to_string(score));
+	scoreText.setString("Puntuación:" + std::to_string(score));
 
 }
 
@@ -153,8 +147,9 @@ void Update()
 
 	float factor = ball.speed * deltaTime;
 	ball.picture.move(std::cos(ball.angle) * factor, std::sin(ball.angle) * factor);
-	//physics
-	//edge
+	
+	//Fisicas
+	//Bordes
 	if (ball.picture.getPosition().y + ball.picture.getRadius() > frameHeight)
 	{
 		isPlaying = false;
@@ -181,7 +176,7 @@ void Update()
 		
 	}
 
-	//paddle
+	//Plataforma
 	if (BallBottom(paddle.picture))
 	{
 		int dis = ball.picture.getPosition().x - paddle.picture.getPosition().x;
@@ -214,11 +209,11 @@ void Update()
 			}
 		}
 
-		combo = 0;
+		
 		ball.setPosition(ball.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball.picture.getRadius() - 0.1f);
 		
 	}
-	//bricks
+	//Bloques
 	for (int i = 0; i < bricks.size(); ++i)
 	{
 		if (bricks[i]->enable)
@@ -234,8 +229,7 @@ void Update()
 					bricks[i]->picture.move(-bricks[i]->speed * deltaTime, 0.0f);
 				else
 					bricks[i]->picture.move(bricks[i]->speed * deltaTime, 0.0f);
-
-
+				
 			}
 
 
@@ -244,15 +238,21 @@ void Update()
 				ball.angle = -ball.angle;
 				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y + bricks[i]->picture.getSize().y / 2 + ball.picture.getRadius() + 0.1f);
 				if (bricks[i]->hit())
-				{
-					
-				}
+					if (bricks[i]->hit())
+					{
+						int dado = rand() % 50;
+						if (dado == 10) {
+							ball.speed == 800.f;
+						}
+						score = score + 10;
+
+					}
 				else
 				{
-					
+					score = score + 5;
 				}
-				combo++;
-				score = score + combo * 10;
+				
+				
 			}
 			else if (BallBottom(bricks[i]->picture))
 			{
@@ -260,14 +260,17 @@ void Update()
 				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y - bricks[i]->picture.getSize().y / 2 - ball.picture.getRadius() - 0.1f);
 				if (bricks[i]->hit())
 				{
-					
+					int dado = rand() % 50;
+					if (dado == 10) {
+						ball.speed == 800.f;
+					}
+					score = score + 10;
+
 				}
 				else
 				{
-					
+					score = score + 5;
 				}
-				combo++;
-				score = score + combo * 10;
 			}
 			else if (BallLeft(bricks[i]->picture))
 			{
@@ -275,14 +278,17 @@ void Update()
 				ball.setPosition(bricks[i]->picture.getPosition().x + ball.picture.getRadius() + bricks[i]->picture.getSize().x / 2 + 0.1f, ball.picture.getPosition().y);
 				if (bricks[i]->hit())
 				{
-					
+					int dado = rand()%50;
+					if (dado == 10) {
+						ball.speed == 800.f;
+					}
+					score = score + 10;
+
 				}
 				else
 				{
-					
+					score = score + 5;
 				}
-				combo++;
-				score = score + combo * 10;
 			}
 			else if (BallRight(bricks[i]->picture))
 			{
@@ -290,14 +296,17 @@ void Update()
 				ball.setPosition(bricks[i]->picture.getPosition().x - ball.picture.getRadius() - bricks[i]->picture.getSize().x / 2 - 0.1f, ball.picture.getPosition().y);
 				if (bricks[i]->hit())
 				{
-					
+					int dado = rand() % 50;
+					if (dado == 10) {
+						ball.speed == 800.f;
+					}
+					score = score + 10;
+
 				}
 				else
 				{
-					
+					score = score + 5;
 				}
-				combo++;
-				score = score + combo * 10;
 			}
 		}
 	}
@@ -311,7 +320,7 @@ void Update()
 	int count = 0;
 	for (int i = 0; i < bricks.size(); ++i)
 	{
-		if (bricks[i]->enable && bricks[i]->hp < 3)
+		if (bricks[i]->enable && bricks[i]->hp < 4)
 			count++;
 	}
 
@@ -320,10 +329,10 @@ void Update()
 		win = true;
 		ball.speed += 100.f;
 		
-		gameoverText.setString("Win! press \"Enter\" to next level");
+		gameoverText.setString("Ganó! presione \"Enter\" para reiniciar el juego");
 	}
-	lifeText.setString("life:" + std::to_string(life));
-	scoreText.setString("score:" + std::to_string(score));
+	lifeText.setString("Vida:" + std::to_string(life));
+	scoreText.setString("Puntuación:" + std::to_string(score));
 }
 
 void Render()
@@ -346,6 +355,11 @@ void Render()
 			{
 				bricks[i]->picture.setTexture(&textureBrick);
 				bricks[i]->picture.setFillColor(Color::Color(255, 0, 0, 255));
+			}
+			else if (bricks[i]->hp == 3)
+			{
+				bricks[i]->picture.setTexture(&textureBrick);
+				bricks[i]->picture.setFillColor(Color::Color(255, 255, 0, 255));
 			}
 			
 			window.draw(bricks[i]->picture);
@@ -420,7 +434,7 @@ void HandleInput()
 			life = 3;
 			gameover = false;
 			score = 0;
-			combo = 0;
+			
 			loadLevel();
 			
 		}
@@ -457,7 +471,9 @@ void loadLevel()
 	ball.setSize(10);
 	ball.setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball.picture.getRadius());
 	ball.angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+	ball.speed = 500.f;
 	ball.picture.setTexture(&textureBall);
+	
 
 
 	for (int i = 0; i < bricks.size(); ++i)
@@ -472,14 +488,14 @@ void loadLevel()
 		for (int j = 0; j < 10; j++)
 		{
 			int temp = rand() % 5;
-			if (temp == 0)
-			{
-				Brick* bptr = new Brick;
-				bptr->initiate();
-				bptr->setSize(70, 30);
-				bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
-				bptr->hp = 1;
-				bricks.push_back(bptr);
+				if (temp == 0)
+				{
+					Brick* bptr = new Brick;
+					bptr->initiate();
+					bptr->setSize(70, 30);
+					bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
+					bptr->hp = 1;
+					bricks.push_back(bptr);
 				}
 				else if (temp == 1)
 				{
@@ -490,17 +506,16 @@ void loadLevel()
 					bptr->hp = 2;
 					bricks.push_back(bptr);
 				}
-				
 				else if (temp == 2)
 				{
 					Brick* bptr = new Brick;
 					bptr->initiate();
 					bptr->setSize(70, 30);
 					bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
-					bptr->hp = 1;
-					bptr->speed = 300;
+					bptr->hp = 3;
 					bricks.push_back(bptr);
-			}
+				}
+				
 
 		}
 	}

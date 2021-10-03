@@ -16,6 +16,7 @@ void Brick::setPosition(float x, float y)
 }
 bool Brick::hit()
 {
+	
 	hp--;
 	if (hp == 0)
 	{
@@ -26,5 +27,5 @@ bool Brick::hit()
 	{
 		return false;
 	}
-
+	
 }
