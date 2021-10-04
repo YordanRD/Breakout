@@ -1,1 +1,2 @@
 C:\Users\Tutor\OneDrive\Documentos\Breakout\Debug\Breakout.exe
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\Debug\Breakout.exe

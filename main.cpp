@@ -363,7 +363,7 @@ void Update()
 						cout << "Funciona 4" << endl;
 					}
 					else if (i == 0) {
-						paddle.setSize(200, 35);
+						paddle.setSize(50, 35);
 						cout << "Funciona 5" << endl;
 					}
 					score = score + 10;
