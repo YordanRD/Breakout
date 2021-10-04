@@ -4,6 +4,7 @@
 #include <vector>
 #include <math.h>
 #include <stdlib.h>
+#include <iostream>
 
 
 #define _CRTDBG_MAP_ALLOC
@@ -238,14 +239,29 @@ void Update()
 				ball.angle = -ball.angle;
 				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y + bricks[i]->picture.getSize().y / 2 + ball.picture.getRadius() + 0.1f);
 				if (bricks[i]->hit())
-					if (bricks[i]->hit())
 					{
-						int dado = rand() % 50;
-						if (dado == 10) {
-							ball.speed == 800.f;
-						}
-						score = score + 10;
-
+					int i = rand() % 5;
+					if (i == 1) {
+						ball.speed = 800.f;
+						cout << "Funciona 1" << endl;
+					}
+					else if (i == 2) {
+						ball.speed = 500.f;
+						cout << "Funciona 2" << endl;
+					}
+					else if (i == 3) {
+						ball.speed = 1000.f;
+						cout << "Funciona 3" << endl;
+					}
+					else if (i == 4) {
+						ball.speed = 100.f;
+						cout << "Funciona 4" << endl;
+					}
+					else if (i == 0) {
+						paddle.setSize(200, 35);
+						cout << "Funciona 5" << endl;
+					}
+						score = score + 10;					
 					}
 				else
 				{
@@ -260,12 +276,29 @@ void Update()
 				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y - bricks[i]->picture.getSize().y / 2 - ball.picture.getRadius() - 0.1f);
 				if (bricks[i]->hit())
 				{
-					int dado = rand() % 50;
-					if (dado == 10) {
-						ball.speed == 800.f;
+					int i = rand() % 5;
+					if (i == 1) {
+						ball.speed = 800.f;
+						cout << "Funciona 1" << endl;
 					}
+					else if (i == 2) {
+						ball.speed = 500.f;
+						cout << "Funciona 2" << endl;
+					}
+					else if (i == 3) {
+						ball.speed = 1000.f;
+						cout << "Funciona 3" << endl;
+					}
+					else if (i == 4) {
+						ball.speed = 100.f;
+						cout << "Funciona 4" << endl;
+					}
+					else if (i == 0) {
+						paddle.setSize(200, 35);
+						cout << "Funciona 5" << endl;
+					}
+					cout << i << endl;
 					score = score + 10;
-
 				}
 				else
 				{
@@ -278,12 +311,28 @@ void Update()
 				ball.setPosition(bricks[i]->picture.getPosition().x + ball.picture.getRadius() + bricks[i]->picture.getSize().x / 2 + 0.1f, ball.picture.getPosition().y);
 				if (bricks[i]->hit())
 				{
-					int dado = rand()%50;
-					if (dado == 10) {
-						ball.speed == 800.f;
+					int i = rand() % 5;
+					if (i == 1) {
+						ball.speed = 800.f;
+						cout << "Funciona 1" << endl;
+					}
+					else if (i == 2) {
+						ball.speed = 500.f;
+						cout << "Funciona 2" << endl;
+					}
+					else if (i == 3) {
+						ball.speed = 1000.f;
+						cout << "Funciona 3" << endl;
+					}
+					else if (i == 4) {
+						ball.speed = 100.f;
+						cout << "Funciona 4" << endl;
+					}
+					else if (i == 0) {
+						paddle.setSize(200, 35);
+						cout << "Funciona 5" << endl;
 					}
 					score = score + 10;
-
 				}
 				else
 				{
@@ -296,12 +345,28 @@ void Update()
 				ball.setPosition(bricks[i]->picture.getPosition().x - ball.picture.getRadius() - bricks[i]->picture.getSize().x / 2 - 0.1f, ball.picture.getPosition().y);
 				if (bricks[i]->hit())
 				{
-					int dado = rand() % 50;
-					if (dado == 10) {
-						ball.speed == 800.f;
+					int i = rand() % 5;
+					if (i == 1) {
+						ball.speed = 800.f;
+						cout << "Funciona 1" << endl;
+					}
+					else if (i == 2) {
+						ball.speed = 500.f;
+						cout << "Funciona 2" << endl;
+					}
+					else if (i == 3) {
+						ball.speed = 1000.f;
+						cout << "Funciona 3" << endl;
+					}
+					else if (i == 4) {
+						ball.speed = 100.f;
+						cout << "Funciona 4" << endl;
+					}
+					else if (i == 0) {
+						paddle.setSize(200, 35);
+						cout << "Funciona 5" << endl;
 					}
 					score = score + 10;
-
 				}
 				else
 				{
@@ -359,7 +424,7 @@ void Render()
 			else if (bricks[i]->hp == 3)
 			{
 				bricks[i]->picture.setTexture(&textureBrick);
-				bricks[i]->picture.setFillColor(Color::Color(255, 255, 0, 255));
+				bricks[i]->picture.setFillColor(Color::Color(255, 0, 255, 255));
 			}
 			
 			window.draw(bricks[i]->picture);
