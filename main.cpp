@@ -46,6 +46,7 @@ bool win = false;
 
 int life = 1;
 int score = 0;
+int deep = 0;
 
 int paddleSize;
 
@@ -54,7 +55,6 @@ const float startposX = 55;
 const float startposY = 70;
 
 Paddle paddle;
-//Ball ball;
 
 Texture textureBall;
 RectangleShape background;
@@ -174,7 +174,6 @@ void Update()
 				isPlaying = false;
 				life--;
 
-				//Reset();
 			}
 			else {
 				life--;
@@ -246,322 +245,355 @@ void Update()
 		for (int j = 0; j < bricks.size(); ++j)
 		{
 			if (bricks[j]->enable)
-			{
-				if (bricks[j]->speed != 0.f)
-				{
-					if (bricks[j]->picture.getPosition().x - bricks[i]->picture.getSize().x / 2 < 50.f)
-						bricks[j]->moveLeft = false;
-					else if (bricks[j]->picture.getPosition().x + bricks[i]->picture.getSize().x / 2 > frameWidth - 50.f)
-						bricks[j]->moveLeft = true;
-
-					if (bricks[j]->moveLeft)
-						bricks[j]->picture.move(-bricks[j]->speed * deltaTime, 0.0f);
-					else
-						bricks[j]->picture.move(bricks[j]->speed * deltaTime, 0.0f);
-
-				}
-
-
-				if (BallUp(bricks[j]->picture, balls[i]->picture))
-				{
-					balls[i]->angle = -balls[i]->angle;
-					balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y + bricks[j]->picture.getSize().y / 2 + balls[i]->picture.getRadius() + 0.1f);
-					if (bricks[j]->hit())
+			{			
+					if (BallUp(bricks[j]->picture, balls[i]->picture))
 					{
-						int x;
-						if (balls.size() == 3 && life == 3) {
-							//bool not2 = false;
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2 && possX != 0) {
-									x = possX;
-									break;
+						balls[i]->angle = -balls[i]->angle;
+						balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y + bricks[j]->picture.getSize().y / 2 + balls[i]->picture.getRadius() + 0.1f);
+						if (bricks[j]->hit())
+						{
+							// Primer rebote
+							int x;
+							if (balls.size() == 3 && life == 3) {
+								//bool not2 = false;
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2 && possX != 0) {
+										x = possX;
+										break;
+									}
 								}
 							}
-						}
-						else if (balls.size() == 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2) {
-									x = possX;
-									break;
+							else if (balls.size() == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2) {
+										x = possX;
+										break;
+									}
 								}
 							}
-						}
-						else if (life == 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 0) {
-									x = possX;
-									break;
+							else if (life == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 0) {
+										x = possX;
+										break;
+									}
 								}
 							}
-						}
-						else {
-							x = rand() % 5;
-						}
+							else {
+								x = rand() % 30;
+							}
+							if (x == 0) {
+								life++;
+								paddleSize = paddleSize + 30;
+								paddle.setSize(paddleSize, 35);
+							}
 
-						if (x == 1) {
-							balls[i]->speed = 800.f;
-							cout << "Funciona 1" << endl;
-						}
-						else if (x == 2) {
-							Ball* ball = new Ball;
-							ball->initiate();
-							ball->setSize(10);
-							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
-							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
-							ball->speed = 500.f;
-							ball->picture.setTexture(&textureBall);
-							balls.push_back(ball);
-							cout << "Funciona 2" << endl;
-						}
-						else if (x == 3) {
-							balls[i]->speed = 600.f;
-							cout << "Funciona 3" << endl;
-						}
-						else if (x == 4) {
-							balls[i]->speed = 200.f;
-							cout << "Funciona 4" << endl;
-						}
-						else if (x == 0) {
-							life++;
-							paddleSize = paddleSize + 30;
-							paddle.setSize(paddleSize, 35);
-							cout << "Funciona 5" << endl;
-						}
-						score = score + 10;
-					}
-					else
-					{
-						score = score + 5;
-					}
+							else if (x == 1) {
+								balls[i]->speed = 1000.f;
+							}
+							else if (x == 2) {
+								Ball* ball = new Ball;
+								ball->initiate();
+								ball->setSize(10);
+								ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+								ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+								ball->speed = 500.f;
+								ball->picture.setTexture(&textureBall);
+								balls.push_back(ball);
+							}
+							else if (x == 3) {
+								balls[i]->speed = 500.f;
+							}
+							else if (x == 4) {
+								balls[i]->speed = 200.f;
+							}
+							else if (x == 5) {
+								paddle.setSize(210, 35);
+							}
+							else if (x == 6) {
+								paddle.setSize(150, 35);
+							}
+							else if (x == 7) {
+								paddle.setSize(75, 35);
+							}
+							else if (x == 8) {
+								deep++;
+							}
 
 
-				}
-				else if (BallBottom(bricks[j]->picture, balls[i]->picture))
-				{
-					balls[i]->angle = -balls[i]->angle;
-					balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y - bricks[j]->picture.getSize().y / 2 - balls[i]->picture.getRadius() - 0.1f);
-					if (bricks[j]->hit())
-					{
-						int x;
-						if (balls.size() == 3 && life == 3) {
-							//bool not2 = false;
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2 && possX != 0) {
-									x = possX;
-									break;
-								}
-							}
+
+							cout << i << endl;
+							score = score + 10;
 						}
-						else if (balls.size() == 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2) {
-									x = possX;
-									break;
-								}
-							}
+						else
+						{
+							score = score + 5;
 						}
-						else if (life == 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 0) {
-									x = possX;
-									break;
-								}
-							}
-						}
-						else {
-							x = rand() % 5;
-						}
-						if (x == 1) {
-							balls[i]->speed = 800.f;
-							cout << "Funciona 1" << endl;
-						}
-						else if (x == 2) {
-							Ball* ball = new Ball;
-							ball->initiate();
-							ball->setSize(10);
-							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
-							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
-							ball->speed = 500.f;
-							ball->picture.setTexture(&textureBall);
-							balls.push_back(ball);
-							cout << "Funciona 2" << endl;
-						}
-						else if (x == 3) {
-							balls[i]->speed = 600.f;
-							cout << "Funciona 3" << endl;
-						}
-						else if (x == 4) {
-							balls[i]->speed = 200.f;
-							cout << "Funciona 4" << endl;
-						}
-						else if (x == 0) {
-							life++;
-							paddleSize = paddleSize + 30;
-							paddle.setSize(paddleSize, 35);
-							cout << "Funciona 5" << endl;
-						}
-						cout << i << endl;
-						score = score + 10;
+
+
 					}
-					else
+					else if (BallBottom(bricks[j]->picture, balls[i]->picture))
 					{
-						score = score + 5;
+						balls[i]->angle = -balls[i]->angle;
+						balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y - bricks[j]->picture.getSize().y / 2 - balls[i]->picture.getRadius() - 0.1f);
+						if (bricks[j]->hit())
+						{
+							int x;
+							if (balls.size() == 3 && life == 3) {
+								//bool not2 = false;
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2 && possX != 0) {
+										x = possX;
+										break;
+									}
+								}
+							}
+							else if (balls.size() == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2) {
+										x = possX;
+										break;
+									}
+								}
+							}
+							else if (life == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 0) {
+										x = possX;
+										break;
+									}
+								}
+							}
+							else {
+								x = rand() % 30;
+							}
+							if (x == 0) {
+								life++;
+								paddleSize = paddleSize + 30;
+								paddle.setSize(paddleSize, 35);
+							}
+
+							else if (x == 1) {
+								balls[i]->speed = 1000.f;
+							}
+							else if (x == 2) {
+								Ball* ball = new Ball;
+								ball->initiate();
+								ball->setSize(10);
+								ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+								ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+								ball->speed = 500.f;
+								ball->picture.setTexture(&textureBall);
+								balls.push_back(ball);
+							}
+							else if (x == 3) {
+								balls[i]->speed = 500.f;
+							}
+							else if (x == 4) {
+								balls[i]->speed = 200.f;
+							}
+							else if (x == 5) {
+								paddle.setSize(210, 35);
+							}
+							else if (x == 6) {
+								paddle.setSize(150, 35);
+							}
+							else if (x == 7) {
+								paddle.setSize(75, 35);
+							}
+							else if (x == 8) {
+								deep++;
+							}
+
+
+
+							cout << i << endl;
+							score = score + 10;
+						
+						}
+						else
+						{
+							score = score + 5;
+						}
 					}
-				}
-				else if (BallLeft(bricks[j]->picture, balls[i]->picture))
-				{
-					balls[i]->angle = pi - balls[i]->angle;
-					balls[i]->setPosition(bricks[j]->picture.getPosition().x + balls[i]->picture.getRadius() + bricks[j]->picture.getSize().x / 2 + 0.1f, balls[i]->picture.getPosition().y);
-					if (bricks[i]->hit())
+					else if (BallLeft(bricks[j]->picture, balls[i]->picture))
 					{
-						int x;
-						if (balls.size() == 3 && life == 3) {
-							//bool not2 = false;
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2 && possX != 0) {
-									x = possX;
-									break;
+						balls[i]->angle = pi - balls[i]->angle;
+						balls[i]->setPosition(bricks[j]->picture.getPosition().x + balls[i]->picture.getRadius() + bricks[j]->picture.getSize().x / 2 + 0.1f, balls[i]->picture.getPosition().y);
+						if (bricks[i]->hit())
+						{
+							int x;
+							if (balls.size() == 3 && life == 3) {
+								//bool not2 = false;
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2 && possX != 0) {
+										x = possX;
+										break;
+									}
 								}
 							}
-						}
-						else if (balls.size() == 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2) {
-									x = possX;
-									break;
+							else if (balls.size() == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2) {
+										x = possX;
+										break;
+									}
 								}
 							}
-						}
-						else if (life == 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 0) {
-									x = possX;
-									break;
+							else if (life == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 0) {
+										x = possX;
+										break;
+									}
 								}
 							}
+							else {
+								x = rand() % 30;
+							}
+							if (x == 0) {
+								life++;
+								paddleSize = paddleSize + 30;
+								paddle.setSize(paddleSize, 35);
+							}
+
+							else if (x == 1) {
+								balls[i]->speed = 1000.f;
+							}
+							else if (x == 2) {
+								Ball* ball = new Ball;
+								ball->initiate();
+								ball->setSize(10);
+								ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+								ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+								ball->speed = 500.f;
+								ball->picture.setTexture(&textureBall);
+								balls.push_back(ball);
+							}
+							else if (x == 3) {
+								balls[i]->speed = 500.f;
+							}
+							else if (x == 4) {
+								balls[i]->speed = 200.f;
+							}
+							else if (x == 5) {
+								paddle.setSize(210, 35);
+							}
+							else if (x == 6) {
+								paddle.setSize(150, 35);
+							}
+							else if (x == 7) {
+								paddle.setSize(75, 35);
+							}
+							else if (x == 8) {
+								deep++;
+							}
+
+
+
+							cout << i << endl;
+							score = score + 10;
 						}
-						else {
-							x = rand() % 5;
+						else
+						{
+							score = score + 5;
 						}
-						if (x == 1) {
-							balls[i]->speed = 800.f;
-							cout << "Funciona 1" << endl;
-						}
-						else if (x == 2) {
-							Ball* ball = new Ball;
-							ball->initiate();
-							ball->setSize(10);
-							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
-							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
-							ball->speed = 500.f;
-							ball->picture.setTexture(&textureBall);
-							balls.push_back(ball);
-							cout << "Funciona 2" << endl;
-						}
-						else if (x == 3) {
-							balls[i]->speed = 600.f;
-							cout << "Funciona 3" << endl;
-						}
-						else if (x == 4) {
-							balls[i]->speed = 200.f;
-							cout << "Funciona 4" << endl;
-						}
-						else if (x == 0) {
-							life++;
-							paddleSize = paddleSize + 30;
-							paddle.setSize(paddleSize, 35);
-							cout << "Funciona 5" << endl;
-						}
-						score = score + 10;
 					}
-					else
+					else if (BallRight(bricks[j]->picture, balls[i]->picture))
 					{
-						score = score + 5;
-					}
-				}
-				else if (BallRight(bricks[j]->picture, balls[i]->picture))
-				{
-					balls[i]->angle = pi - balls[i]->angle;
-					balls[i]->setPosition(bricks[j]->picture.getPosition().x - balls[i]->picture.getRadius() - bricks[j]->picture.getSize().x / 2 - 0.1f, balls[i]->picture.getPosition().y);
-					if (bricks[i]->hit())
-					{
-						int x;
-						if (balls.size() == 3 && life == 3) {
-							//bool not2 = false;
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2 && possX != 0) {
-									x = possX;
-									break;
+						balls[i]->angle = pi - balls[i]->angle;
+						balls[i]->setPosition(bricks[j]->picture.getPosition().x - balls[i]->picture.getRadius() - bricks[j]->picture.getSize().x / 2 - 0.1f, balls[i]->picture.getPosition().y);
+						if (bricks[i]->hit())
+						{
+							int x;
+							if (balls.size() == 3 && life == 3) {
+								//bool not2 = false;
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2 && possX != 0) {
+										x = possX;
+										break;
+									}
 								}
 							}
-						}
-						else if (balls.size() == 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 2) {
-									x = possX;
-									break;
+							else if (balls.size() == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 2) {
+										x = possX;
+										break;
+									}
 								}
 							}
-						}
-						else if (life >= 3) {
-							while (true) {
-								int possX = rand() % 5;
-								if (possX != 0) {
-									x = possX;
-									break;
+							else if (life == 3) {
+								while (true) {
+									int possX = rand() % 30;
+									if (possX != 0) {
+										x = possX;
+										break;
+									}
 								}
 							}
+							else {
+								x = rand() % 30;
+							}
+							if (x == 0) {
+								life++;
+								paddleSize = paddleSize + 30;
+								paddle.setSize(paddleSize, 35);
+							}
+
+							else if (x == 1) {
+								balls[i]->speed = 1000.f;
+							}
+							else if (x == 2) {
+								Ball* ball = new Ball;
+								ball->initiate();
+								ball->setSize(10);
+								ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+								ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+								ball->speed = 500.f;
+								ball->picture.setTexture(&textureBall);
+								balls.push_back(ball);
+							}
+							else if (x == 3) {
+								balls[i]->speed = 500.f;
+							}
+							else if (x == 4) {
+								balls[i]->speed = 200.f;
+							}
+							else if (x == 5) {
+								paddle.setSize(210, 35);
+							}
+							else if (x == 6) {
+								paddle.setSize(150, 35);
+							}
+							else if (x == 7) {
+								paddle.setSize(75, 35);
+							}
+							else if (x == 8) {
+								deep++;
+							}
+
+
+
+							cout << i << endl;
+							score = score + 10;
 						}
-						else {
-							x = rand() % 5;
+						else
+						{
+							score = score + 5;
 						}
-						if (x == 1) {
-							balls[i]->speed = 800.f;
-							cout << "Funciona 1" << endl;
-						}
-						else if (x == 2) {
-							Ball* ball = new Ball;
-							ball->initiate();
-							ball->setSize(10);
-							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
-							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
-							ball->speed = 500.f;
-							ball->picture.setTexture(&textureBall);
-							balls.push_back(ball);
-							cout << "Funciona 2" << endl;
-						}
-						else if (x == 3) {
-							balls[i]->speed = 600.f;
-							cout << "Funciona 3" << endl;
-						}
-						else if (x == 4) {
-							balls[i]->speed = 200.f;
-							cout << "Funciona 4" << endl;
-						}
-						else if (x == 0) {
-							life++;
-							paddleSize = paddleSize + 30;
-							paddle.setSize(paddleSize, 35);
-							cout << "Funciona 5" << endl;
-						}
-						score = score + 10;
 					}
-					else
-					{
-						score = score + 5;
-					}
-				}
 			}
 		}
 
@@ -584,10 +616,10 @@ void Update()
 			win = true;
 			balls[i]->speed += 100.f;
 
-			gameoverText.setString("Gan�! presione \"Enter\" para reiniciar el juego");
+			gameoverText.setString("Ganó! presione \"Enter\" para reiniciar el juego");
 		}
 		lifeText.setString("Vida:" + std::to_string(life));
-		scoreText.setString("Puntuaci�n:" + std::to_string(score));
+		scoreText.setString("Puntuación:" + std::to_string(score));
 	}
 }
 
