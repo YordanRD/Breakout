@@ -44,15 +44,17 @@ bool isPlaying = false;
 bool gameover = false;
 bool win = false;
 
-int life = 3;
+int life = 1;
 int score = 0;
+
+int paddleSize;
 
 
 const float startposX = 55;
 const float startposY = 70;
 
 Paddle paddle;
-Ball ball;
+//Ball ball;
 
 Texture textureBall;
 RectangleShape background;
@@ -61,6 +63,7 @@ Texture texturePaddle;
 Texture textureBrick;
 
 vector<Brick*> bricks;
+vector<Ball*> balls;
 
 void Initiate();
 void Reset();
@@ -69,17 +72,16 @@ void Render();
 void HandleInput();
 void loadLevel();
 
-bool BallLeft(RectangleShape rect);
-bool BallRight(RectangleShape rect);
-bool BallUp(RectangleShape rect);
-bool BallBottom(RectangleShape rect);
+bool BallLeft(RectangleShape rect, CircleShape circ);
+bool BallRight(RectangleShape rect, CircleShape circ);
+bool BallUp(RectangleShape rect, CircleShape circ);
+bool BallBottom(RectangleShape rect, CircleShape circ);
 
 int main()
 {
 
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF |
 		_CRTDBG_LEAK_CHECK_DF);
-
 
 	window.create(VideoMode(frameWidth, frameHeight), "Breakout");
 	Initiate();
@@ -101,6 +103,9 @@ int main()
 	return EXIT_SUCCESS;
 }
 
+/**
+* Inicializa las imagenes y textos necesarios para el correcto funcionamiento del juego
+*/
 void Initiate()
 {
 	font.loadFromFile("consola.ttf");
@@ -127,303 +132,478 @@ void Initiate()
 	scoreText.setFont(font);
 	scoreText.setCharacterSize(20);
 	scoreText.setPosition(80, frameHeight - 30);
-	scoreText.setString("Puntuación:" + std::to_string(score));
+	scoreText.setString("Puntuaciï¿½n:" + std::to_string(score));
 
 }
 
+/***/
 void Reset()
 {
-	ball.setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball.picture.getRadius());
-	ball.angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+	for (int i = 0; i < balls.size(); i++) {
+		balls[i]->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - balls[i]->picture.getRadius());
+		balls[i]->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+	}
 
 }
 
+/**
+* Mï¿½todo que actualiza el estado de las partes del juego en pantalla
+* En caso de que la bola no estï¿½ colisionando con nada la hace seguir su movimiento
+* En caso de chocar con la barra del jugador cambia su direcciï¿½n y angulo
+* En caso de chocar con un borde cambia su dirrecciï¿½n y angulo
+* En caso de chocar con un bloque, baja la cantidad de golpes faltantes para que este se destruya
+* Si una bola colisiona con el borde inferior, esta es eliminada
+*/
 void Update()
 {
-	if (ball.angle < 0)
-	{
-		ball.angle += 2 * pi;
-	}
-	ball.angle = fmod(ball.angle, 2 * pi);
-
-	float factor = ball.speed * deltaTime;
-	ball.picture.move(std::cos(ball.angle) * factor, std::sin(ball.angle) * factor);
-	
-	//Fisicas
-	//Bordes
-	if (ball.picture.getPosition().y + ball.picture.getRadius() > frameHeight)
-	{
-		isPlaying = false;
-		life--;
-		
-		Reset();
-	}
-	else if (ball.picture.getPosition().x - ball.picture.getRadius() < 50.f)
-	{
-		ball.angle = pi - ball.angle;
-		ball.picture.setPosition(ball.picture.getRadius() + 50.1f, ball.picture.getPosition().y);
-		
-	}
-	else if (ball.picture.getPosition().x + ball.picture.getRadius() > frameWidth - 50)
-	{
-		ball.angle = pi - ball.angle;
-		ball.setPosition(frameWidth - ball.picture.getRadius() - 50.1f, ball.picture.getPosition().y);
-		
-	}
-	else if (ball.picture.getPosition().y - ball.picture.getRadius() < 50.f)
-	{
-		ball.angle = -ball.angle;
-		ball.setPosition(ball.picture.getPosition().x, ball.picture.getRadius() + 50.1f);
-		
-	}
-
-	//Plataforma
-	if (BallBottom(paddle.picture))
-	{
-		int dis = ball.picture.getPosition().x - paddle.picture.getPosition().x;
-		if (dis > 30 && ball.angle > 1.f / 2.f * pi)
+	for (int i = 0; i < balls.size(); i++) {
+		if (balls[i]->angle < 0)
 		{
-			ball.angle = ball.angle - pi;
+			balls[i]->angle += 2 * pi;
 		}
-		else if (dis < -30 && ball.angle < 1.f / 2.f * pi)
+		balls[i]->angle = fmod(balls[i]->angle, 2 * pi);
+
+		float factor = balls[i]->speed * deltaTime;
+		balls[i]->picture.move(std::cos(balls[i]->angle) * factor, std::sin(balls[i]->angle) * factor);
+
+		//Fisicas
+		//Bordes
+		if (balls[i]->picture.getPosition().y + balls[i]->picture.getRadius() > frameHeight)
 		{
-			ball.angle = ball.angle - pi;
+			if (balls.size() == 1) {
+				isPlaying = false;
+				life--;
+
+				//Reset();
+			}
+			else {
+				life--;
+				paddleSize = paddleSize - 30;
+				paddle.setSize(paddleSize, 35);
+				balls.erase(balls.begin() + i);
+				std::cout << "Balls left: " << balls.size() << endl;
+			}
+			break;
 		}
-		else
+		else if (balls[i]->picture.getPosition().x - balls[i]->picture.getRadius() < 50.f)
 		{
-			ball.angle = -ball.angle;
-			if (ball.angle > 1.f / 2.f * pi && ball.angle < 7.f / 8.f * pi)
-			{
-				ball.angle += (std::rand() % 15) * pi / 180;
-			}
-			else if (ball.angle < 1.f / 2.f * pi && ball.angle > 1.f / 8.f * pi)
-			{
-				ball.angle -= (std::rand() % 15) * pi / 180;
-			}
-			else if (ball.angle <= 1.f / 8.f * pi)
-			{
-				ball.angle += (std::rand() % 15) * pi / 180;
-			}
-			else if (ball.angle >= 7.f / 8.f * pi)
-			{
-				ball.angle -= (std::rand() % 15) * pi / 180;
-			}
+			balls[i]->angle = pi - balls[i]->angle;
+			balls[i]->picture.setPosition(balls[i]->picture.getRadius() + 50.1f, balls[i]->picture.getPosition().y);
+
+		}
+		else if (balls[i]->picture.getPosition().x + balls[i]->picture.getRadius() > frameWidth - 50)
+		{
+			balls[i]->angle = pi - balls[i]->angle;
+			balls[i]->setPosition(frameWidth - balls[i]->picture.getRadius() - 50.1f, balls[i]->picture.getPosition().y);
+
+		}
+		else if (balls[i]->picture.getPosition().y - balls[i]->picture.getRadius() < 50.f)
+		{
+			balls[i]->angle = -balls[i]->angle;
+			balls[i]->setPosition(balls[i]->picture.getPosition().x, balls[i]->picture.getRadius() + 50.1f);
+
 		}
 
-		
-		ball.setPosition(ball.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball.picture.getRadius() - 0.1f);
-		
-	}
-	//Bloques
-	for (int i = 0; i < bricks.size(); ++i)
-	{
-		if (bricks[i]->enable)
-		{
-			if (bricks[i]->speed != 0.f)
-			{
-				if (bricks[i]->picture.getPosition().x - bricks[i]->picture.getSize().x / 2 < 50.f)
-					bricks[i]->moveLeft = false;
-				else if (bricks[i]->picture.getPosition().x + bricks[i]->picture.getSize().x / 2 > frameWidth - 50.f)
-					bricks[i]->moveLeft = true;
 
-				if (bricks[i]->moveLeft)
-					bricks[i]->picture.move(-bricks[i]->speed * deltaTime, 0.0f);
-				else
-					bricks[i]->picture.move(bricks[i]->speed * deltaTime, 0.0f);
-				
+		//Plataforma
+		if (BallBottom(paddle.picture, balls[i]->picture))
+		{
+			int dis = balls[i]->picture.getPosition().x - paddle.picture.getPosition().x;
+			if (dis > 30 && balls[i]->angle > 1.f / 2.f * pi)
+			{
+				balls[i]->angle = balls[i]->angle - pi;
+			}
+			else if (dis < -30 && balls[i]->angle < 1.f / 2.f * pi)
+			{
+				balls[i]->angle = balls[i]->angle - pi;
+			}
+			else
+			{
+				balls[i]->angle = -balls[i]->angle;
+				if (balls[i]->angle > 1.f / 2.f * pi && balls[i]->angle < 7.f / 8.f * pi)
+				{
+					balls[i]->angle += (std::rand() % 15) * pi / 180;
+				}
+				else if (balls[i]->angle < 1.f / 2.f * pi && balls[i]->angle > 1.f / 8.f * pi)
+				{
+					balls[i]->angle -= (std::rand() % 15) * pi / 180;
+				}
+				else if (balls[i]->angle <= 1.f / 8.f * pi)
+				{
+					balls[i]->angle += (std::rand() % 15) * pi / 180;
+				}
+				else if (balls[i]->angle >= 7.f / 8.f * pi)
+				{
+					balls[i]->angle -= (std::rand() % 15) * pi / 180;
+				}
 			}
 
 
-			if (BallUp(bricks[i]->picture))
+			balls[i]->setPosition(balls[i]->picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - balls[i]->picture.getRadius() - 0.1f);
+
+		}
+		//Bloques
+		for (int j = 0; j < bricks.size(); ++j)
+		{
+			if (bricks[j]->enable)
 			{
-				ball.angle = -ball.angle;
-				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y + bricks[i]->picture.getSize().y / 2 + ball.picture.getRadius() + 0.1f);
-				if (bricks[i]->hit())
+				if (bricks[j]->speed != 0.f)
+				{
+					if (bricks[j]->picture.getPosition().x - bricks[i]->picture.getSize().x / 2 < 50.f)
+						bricks[j]->moveLeft = false;
+					else if (bricks[j]->picture.getPosition().x + bricks[i]->picture.getSize().x / 2 > frameWidth - 50.f)
+						bricks[j]->moveLeft = true;
+
+					if (bricks[j]->moveLeft)
+						bricks[j]->picture.move(-bricks[j]->speed * deltaTime, 0.0f);
+					else
+						bricks[j]->picture.move(bricks[j]->speed * deltaTime, 0.0f);
+
+				}
+
+
+				if (BallUp(bricks[j]->picture, balls[i]->picture))
+				{
+					balls[i]->angle = -balls[i]->angle;
+					balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y + bricks[j]->picture.getSize().y / 2 + balls[i]->picture.getRadius() + 0.1f);
+					if (bricks[j]->hit())
 					{
-					int i = rand() % 20;
-					if (i == 0) {
-						ball.speed = 1000.f;
+						int x;
+						if (balls.size() == 3 && life == 3) {
+							//bool not2 = false;
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2 && possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (balls.size() == 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (life == 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else {
+							x = rand() % 5;
+						}
 
+						if (x == 1) {
+							balls[i]->speed = 800.f;
+							cout << "Funciona 1" << endl;
+						}
+						else if (x == 2) {
+							Ball* ball = new Ball;
+							ball->initiate();
+							ball->setSize(10);
+							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+							ball->speed = 500.f;
+							ball->picture.setTexture(&textureBall);
+							balls.push_back(ball);
+							cout << "Funciona 2" << endl;
+						}
+						else if (x == 3) {
+							balls[i]->speed = 600.f;
+							cout << "Funciona 3" << endl;
+						}
+						else if (x == 4) {
+							balls[i]->speed = 200.f;
+							cout << "Funciona 4" << endl;
+						}
+						else if (x == 0) {
+							life++;
+							paddleSize = paddleSize + 30;
+							paddle.setSize(paddleSize, 35);
+							cout << "Funciona 5" << endl;
+						}
+						score = score + 10;
 					}
-					else if (i == 1) {
-						ball.speed = 100.f;
+					else
+					{
+						score = score + 5;
+					}
 
-					}
-					else if (i == 2) {
-						ball.speed = 500.f;
 
-					}
-					else if (i == 3) {
-						paddle.setSize(210, 35);
-
-					}
-					else if (i == 4) {
-						paddle.setSize(150, 35);
-
-					}
-					else if (i == 5) {
-						paddle.setSize(75, 35);
-
-					}
-						score = score + 10;					
-					}
-				else
-				{
-					score = score + 5;
 				}
-				
-				
-			}
-			else if (BallBottom(bricks[i]->picture))
-			{
-				ball.angle = -ball.angle;
-				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y - bricks[i]->picture.getSize().y / 2 - ball.picture.getRadius() - 0.1f);
-				if (bricks[i]->hit())
+				else if (BallBottom(bricks[j]->picture, balls[i]->picture))
 				{
-					int i = rand() % 20;
-					if (i == 0) {
-						ball.speed = 1000.f;
-
+					balls[i]->angle = -balls[i]->angle;
+					balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y - bricks[j]->picture.getSize().y / 2 - balls[i]->picture.getRadius() - 0.1f);
+					if (bricks[j]->hit())
+					{
+						int x;
+						if (balls.size() == 3 && life == 3) {
+							//bool not2 = false;
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2 && possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (balls.size() == 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (life == 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else {
+							x = rand() % 5;
+						}
+						if (x == 1) {
+							balls[i]->speed = 800.f;
+							cout << "Funciona 1" << endl;
+						}
+						else if (x == 2) {
+							Ball* ball = new Ball;
+							ball->initiate();
+							ball->setSize(10);
+							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+							ball->speed = 500.f;
+							ball->picture.setTexture(&textureBall);
+							balls.push_back(ball);
+							cout << "Funciona 2" << endl;
+						}
+						else if (x == 3) {
+							balls[i]->speed = 600.f;
+							cout << "Funciona 3" << endl;
+						}
+						else if (x == 4) {
+							balls[i]->speed = 200.f;
+							cout << "Funciona 4" << endl;
+						}
+						else if (x == 0) {
+							life++;
+							paddleSize = paddleSize + 30;
+							paddle.setSize(paddleSize, 35);
+							cout << "Funciona 5" << endl;
+						}
+						cout << i << endl;
+						score = score + 10;
 					}
-					else if (i == 1) {
-						ball.speed = 100.f;
-
+					else
+					{
+						score = score + 5;
 					}
-					else if (i == 2) {
-						ball.speed = 500.f;
-
-					}
-					else if (i == 3) {
-						paddle.setSize(210, 35);
-
-					}
-					else if (i == 4) {
-						paddle.setSize(150, 35);
-
-					}
-					else if (i == 5) {
-						paddle.setSize(75, 35);
-
-					}
-					
-					score = score + 10;
 				}
-				else
+				else if (BallLeft(bricks[j]->picture, balls[i]->picture))
 				{
-					score = score + 5;
+					balls[i]->angle = pi - balls[i]->angle;
+					balls[i]->setPosition(bricks[j]->picture.getPosition().x + balls[i]->picture.getRadius() + bricks[j]->picture.getSize().x / 2 + 0.1f, balls[i]->picture.getPosition().y);
+					if (bricks[i]->hit())
+					{
+						int x;
+						if (balls.size() == 3 && life == 3) {
+							//bool not2 = false;
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2 && possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (balls.size() == 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (life == 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else {
+							x = rand() % 5;
+						}
+						if (x == 1) {
+							balls[i]->speed = 800.f;
+							cout << "Funciona 1" << endl;
+						}
+						else if (x == 2) {
+							Ball* ball = new Ball;
+							ball->initiate();
+							ball->setSize(10);
+							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+							ball->speed = 500.f;
+							ball->picture.setTexture(&textureBall);
+							balls.push_back(ball);
+							cout << "Funciona 2" << endl;
+						}
+						else if (x == 3) {
+							balls[i]->speed = 600.f;
+							cout << "Funciona 3" << endl;
+						}
+						else if (x == 4) {
+							balls[i]->speed = 200.f;
+							cout << "Funciona 4" << endl;
+						}
+						else if (x == 0) {
+							life++;
+							paddleSize = paddleSize + 30;
+							paddle.setSize(paddleSize, 35);
+							cout << "Funciona 5" << endl;
+						}
+						score = score + 10;
+					}
+					else
+					{
+						score = score + 5;
+					}
 				}
-			}
-			else if (BallLeft(bricks[i]->picture))
-			{
-				ball.angle = pi - ball.angle;
-				ball.setPosition(bricks[i]->picture.getPosition().x + ball.picture.getRadius() + bricks[i]->picture.getSize().x / 2 + 0.1f, ball.picture.getPosition().y);
-				if (bricks[i]->hit())
+				else if (BallRight(bricks[j]->picture, balls[i]->picture))
 				{
-					int i = rand() % 20;
-					if (i == 0) {
-						ball.speed = 1000.f;
-												
+					balls[i]->angle = pi - balls[i]->angle;
+					balls[i]->setPosition(bricks[j]->picture.getPosition().x - balls[i]->picture.getRadius() - bricks[j]->picture.getSize().x / 2 - 0.1f, balls[i]->picture.getPosition().y);
+					if (bricks[i]->hit())
+					{
+						int x;
+						if (balls.size() == 3 && life == 3) {
+							//bool not2 = false;
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2 && possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (balls.size() == 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 2) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else if (life >= 3) {
+							while (true) {
+								int possX = rand() % 5;
+								if (possX != 0) {
+									x = possX;
+									break;
+								}
+							}
+						}
+						else {
+							x = rand() % 5;
+						}
+						if (x == 1) {
+							balls[i]->speed = 800.f;
+							cout << "Funciona 1" << endl;
+						}
+						else if (x == 2) {
+							Ball* ball = new Ball;
+							ball->initiate();
+							ball->setSize(10);
+							ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+							ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+							ball->speed = 500.f;
+							ball->picture.setTexture(&textureBall);
+							balls.push_back(ball);
+							cout << "Funciona 2" << endl;
+						}
+						else if (x == 3) {
+							balls[i]->speed = 600.f;
+							cout << "Funciona 3" << endl;
+						}
+						else if (x == 4) {
+							balls[i]->speed = 200.f;
+							cout << "Funciona 4" << endl;
+						}
+						else if (x == 0) {
+							life++;
+							paddleSize = paddleSize + 30;
+							paddle.setSize(paddleSize, 35);
+							cout << "Funciona 5" << endl;
+						}
+						score = score + 10;
 					}
-					else if (i == 1) {
-						ball.speed = 100.f;
-						
+					else
+					{
+						score = score + 5;
 					}
-					else if (i == 2) {
-						ball.speed = 500.f;
-						
-					}
-					else if (i == 3) {
-						paddle.setSize(210, 35);
-						
-					}
-					else if (i == 4) {
-						paddle.setSize(150, 35);
-					
-					}
-					else if (i == 5) {
-						paddle.setSize(75, 35);
-						
-					}
-					
-					
-					score = score + 10;
-				}
-				else
-				{
-					score = score + 5;
-				}
-			}
-			else if (BallRight(bricks[i]->picture))
-			{
-				ball.angle = pi - ball.angle;
-				ball.setPosition(bricks[i]->picture.getPosition().x - ball.picture.getRadius() - bricks[i]->picture.getSize().x / 2 - 0.1f, ball.picture.getPosition().y);
-				if (bricks[i]->hit())
-				{
-					int i = rand() % 20;
-					if (i == 0) {
-						ball.speed = 1000.f;
-
-					}
-					else if (i == 1) {
-						ball.speed = 100.f;
-
-					}
-					else if (i == 2) {
-						ball.speed = 500.f;
-
-					}
-					else if (i == 3) {
-						paddle.setSize(210, 35);
-
-					}
-					else if (i == 4) {
-						paddle.setSize(150, 35);
-
-					}
-					else if (i == 5) {
-						paddle.setSize(75, 35);
-
-					}
-					score = score + 10;
-				}
-				else
-				{
-					score = score + 5;
 				}
 			}
 		}
-	}
-	if (life <= 0)
-	{
-		gameover = true;
-		
-		gameoverText.setString("Juego acabado, presiona \"Enter\" para reiniciar");
-	}
 
-	int count = 0;
-	for (int i = 0; i < bricks.size(); ++i)
-	{
-		if (bricks[i]->enable && bricks[i]->hp < 4)
-			count++;
-	}
+		if (life <= 0)
+		{
+			gameover = true;
 
-	if (count <= 0)
-	{
-		win = true;
-		ball.speed += 100.f;
-		
-		gameoverText.setString("Ganó! presione \"Enter\" para reiniciar el juego");
+			gameoverText.setString("Juego acabado, presiona \"Enter\" para reiniciar");
+		}
+
+		int count = 0;
+		for (int i = 0; i < bricks.size(); ++i)
+		{
+			if (bricks[i]->enable && bricks[i]->hp < 4)
+				count++;
+		}
+
+		if (count <= 0)
+		{
+			win = true;
+			balls[i]->speed += 100.f;
+
+			gameoverText.setString("Ganï¿½! presione \"Enter\" para reiniciar el juego");
+		}
+		lifeText.setString("Vida:" + std::to_string(life));
+		scoreText.setString("Puntuaciï¿½n:" + std::to_string(score));
 	}
-	lifeText.setString("Vida:" + std::to_string(life));
-	scoreText.setString("Puntuación:" + std::to_string(score));
 }
 
+/**
+* Actualiza los elementos graficos de cada parte del juego, bloques, las bolas y la barra del jugador
+* Asï¿½ como el puntaje una ves que los datos son actualizados en Update
+*/
 void Render()
 {
 	window.clear(sf::Color::Black);
 	window.draw(background);
 	window.draw(paddle.picture);
-	window.draw(ball.picture);
+	for (int i = 0; i < balls.size(); ++i)
+	{
+		window.draw(balls[i]->picture);
+	}
 
 	for (int i = 0; i < bricks.size(); ++i)
 	{
@@ -444,7 +624,7 @@ void Render()
 				bricks[i]->picture.setTexture(&textureBrick);
 				bricks[i]->picture.setFillColor(Color::Color(255, 0, 255, 255));
 			}
-			
+
 			window.draw(bricks[i]->picture);
 		}
 
@@ -455,6 +635,9 @@ void Render()
 	window.display();
 }
 
+/**Se encarga de recibir las seï¿½ales de las teclas o el mouse utilizadas por el jugador para poder 
+* interactuar con el juego 
+*/
 void HandleInput()
 {
 	sf::Event event;
@@ -463,6 +646,13 @@ void HandleInput()
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();
+			for (int i = 0; i < balls.size(); ++i)
+			{
+				delete balls[i];
+				balls[i] = nullptr;
+			}
+			balls.clear();
+
 			for (int i = 0; i < bricks.size(); ++i)
 			{
 				delete bricks[i];
@@ -478,11 +668,12 @@ void HandleInput()
 			}
 			if (!isPlaying)
 			{
-				ball.picture.setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball.picture.getRadius());
+				for (int i = 0; i < balls.size(); i++) {
+					balls[i]->picture.setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - balls[i]->picture.getRadius());
+				}
 			}
 		}
 	}
-
 
 
 	if (!gameover)
@@ -505,7 +696,9 @@ void HandleInput()
 
 		if (!isPlaying)
 		{
-			ball.picture.setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball.picture.getRadius());
+			for (int i = 0; i < balls.size(); i++) {
+				balls[i]->picture.setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - balls[i]->picture.getRadius());
+			}
 		}
 
 	}
@@ -517,26 +710,29 @@ void HandleInput()
 			life = 3;
 			gameover = false;
 			score = 0;
-			
+
 			loadLevel();
-			
+
 		}
 		else if (win)
 		{
 			win = false;
 			loadLevel();
-			
+
 		}
 	}
-	
+
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
-	{		
+	{
 		loadLevel();
 	}
 
 }
 
-
+/**
+* Se encarga de dar valores a cada una de las variables o atributos importantes que requiere el juego
+* Se encarga de posicionar las partes del juego para que sean renderizadas y presentadas al usuario.
+*/
 void loadLevel()
 {
 	isPlaying = false;
@@ -545,18 +741,28 @@ void loadLevel()
 
 	gameoverText.setString("");
 
+	paddleSize = 100;
 	paddle.initiate();
-	paddle.setSize(150, 35);
+	paddle.setSize(paddleSize, 35);
 	paddle.setPosition(frameWidth / 2, frameHeight - paddle.picture.getSize().y);
 	paddle.picture.setTexture(&texturePaddle);
 
-	ball.initiate();
-	ball.setSize(10);
-	ball.setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball.picture.getRadius());
-	ball.angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
-	ball.speed = 500.f;
-	ball.picture.setTexture(&textureBall);
-	
+	for (int i = 0; i < balls.size(); ++i)
+	{
+		delete balls[i];
+		balls[i] = nullptr;
+	}
+	balls.clear();
+
+	//Se inicializa la bola y se aï¿½ade a la lista de bolas
+	Ball* ball = new Ball();
+	ball->initiate();
+	ball->setSize(10);
+	ball->setPosition(paddle.picture.getPosition().x, paddle.picture.getPosition().y - paddle.picture.getSize().y / 2 - ball->picture.getRadius());
+	ball->angle = (270 + std::rand() % 60 - 30) * 2 * pi / 360;
+	ball->speed = 500.f;
+	ball->picture.setTexture(&textureBall);
+	balls.push_back(ball);
 
 
 	for (int i = 0; i < bricks.size(); ++i)
@@ -571,76 +777,83 @@ void loadLevel()
 		for (int j = 0; j < 10; j++)
 		{
 			int temp = rand() % 5;
-				if (temp == 0)
-				{
-					Brick* bptr = new Brick;
-					bptr->initiate();
-					bptr->setSize(70, 30);
-					bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
-					bptr->hp = 1;
-					bricks.push_back(bptr);
-				}
-				else if (temp == 1)
-				{
-					Brick* bptr = new Brick;
-					bptr->initiate();
-					bptr->setSize(70, 30);
-					bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
-					bptr->hp = 2;
-					bricks.push_back(bptr);
-				}
-				else if (temp == 2)
-				{
-					Brick* bptr = new Brick;
-					bptr->initiate();
-					bptr->setSize(70, 30);
-					bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
-					bptr->hp = 3;
-					bricks.push_back(bptr);
-				}
-				
+			if (temp == 0)
+			{
+				Brick* bptr = new Brick;
+				bptr->initiate();
+				bptr->setSize(70, 30);
+				bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
+				bptr->hp = 1;
+				bricks.push_back(bptr);
+			}
+			else if (temp == 1)
+			{
+				Brick* bptr = new Brick;
+				bptr->initiate();
+				bptr->setSize(70, 30);
+				bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
+				bptr->hp = 2;
+				bricks.push_back(bptr);
+			}
+			else if (temp == 2)
+			{
+				Brick* bptr = new Brick;
+				bptr->initiate();
+				bptr->setSize(70, 30);
+				bptr->setPosition(startposX + bptr->picture.getSize().x / 2 + j * bptr->picture.getSize().x, startposY + bptr->picture.getSize().y / 2 + i * bptr->picture.getSize().y);
+				bptr->hp = 3;
+				bricks.push_back(bptr);
+			}
+
 
 		}
 	}
 
 }
 
-bool BallLeft(RectangleShape rect)
+/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie izquierdo*/
+bool BallLeft(RectangleShape rect, CircleShape circ)
 {
-	if (ball.picture.getPosition().x + ball.picture.getRadius() > rect.getPosition().x - rect.getSize().x / 2 &&
-		ball.picture.getPosition().x + ball.picture.getRadius() < rect.getPosition().x + rect.getSize().x / 2 &&
-		ball.picture.getPosition().y + ball.picture.getRadius() >= rect.getPosition().y - rect.getSize().y / 2 &&
-		ball.picture.getPosition().y - ball.picture.getRadius() <= rect.getPosition().y + rect.getSize().y / 2)
+	if (circ.getPosition().x + circ.getRadius() > rect.getPosition().x - rect.getSize().x / 2 &&
+		circ.getPosition().x + circ.getRadius() < rect.getPosition().x + rect.getSize().x / 2 &&
+		circ.getPosition().y + circ.getRadius() >= rect.getPosition().y - rect.getSize().y / 2 &&
+		circ.getPosition().y - circ.getRadius() <= rect.getPosition().y + rect.getSize().y / 2)
 		return true;
 	else
 		return false;
 }
-bool BallRight(RectangleShape rect)
+
+/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie derecha*/
+bool BallRight(RectangleShape rect, CircleShape circ)
 {
-	if (ball.picture.getPosition().x - ball.picture.getRadius() > rect.getPosition().x - rect.getSize().x / 2 &&
-		ball.picture.getPosition().x - ball.picture.getRadius() < rect.getPosition().x + rect.getSize().x / 2 &&
-		ball.picture.getPosition().y + ball.picture.getRadius() >= rect.getPosition().y - rect.getSize().y / 2 &&
-		ball.picture.getPosition().y - ball.picture.getRadius() <= rect.getPosition().y + rect.getSize().y / 2)
+	if (circ.getPosition().x - circ.getRadius() > rect.getPosition().x - rect.getSize().x / 2 &&
+		circ.getPosition().x - circ.getRadius() < rect.getPosition().x + rect.getSize().x / 2 &&
+		circ.getPosition().y + circ.getRadius() >= rect.getPosition().y - rect.getSize().y / 2 &&
+		circ.getPosition().y - circ.getRadius() <= rect.getPosition().y + rect.getSize().y / 2)
 		return true;
 	else
 		return false;
 }
-bool BallUp(RectangleShape rect)
+
+/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie superior*/
+bool BallUp(RectangleShape rect, CircleShape circ)
 {
-	if (ball.picture.getPosition().x + ball.picture.getRadius() >= rect.getPosition().x - rect.getSize().x / 2 &&
-		ball.picture.getPosition().x - ball.picture.getRadius() <= rect.getPosition().x + rect.getSize().x / 2 &&
-		ball.picture.getPosition().y - ball.picture.getRadius() < rect.getPosition().y + rect.getSize().y / 2 &&
-		ball.picture.getPosition().y - ball.picture.getRadius() > rect.getPosition().y - rect.getSize().y / 2)
+	if (circ.getPosition().x + circ.getRadius() >= rect.getPosition().x - rect.getSize().x / 2 &&
+		circ.getPosition().x - circ.getRadius() <= rect.getPosition().x + rect.getSize().x / 2 &&
+		circ.getPosition().y - circ.getRadius() < rect.getPosition().y + rect.getSize().y / 2 &&
+		circ.getPosition().y - circ.getRadius() > rect.getPosition().y - rect.getSize().y / 2)
 		return true;
 	else
 		return false;
 }
-bool BallBottom(RectangleShape rect)
+
+/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie inferior*/
+bool BallBottom(RectangleShape rect, CircleShape circ)
 {
-	if (ball.picture.getPosition().x + ball.picture.getRadius() >= rect.getPosition().x - rect.getSize().x / 2 &&
-		ball.picture.getPosition().x - ball.picture.getRadius() <= rect.getPosition().x + rect.getSize().x / 2 &&
-		ball.picture.getPosition().y + ball.picture.getRadius() < rect.getPosition().y + rect.getSize().y / 2 &&
-		ball.picture.getPosition().y + ball.picture.getRadius() > rect.getPosition().y - rect.getSize().y / 2)
+	if (circ.getPosition().x + circ.getRadius() >= rect.getPosition().x - rect.getSize().x / 2 &&
+		circ.getPosition().x - circ.getRadius() <= rect.getPosition().x + rect.getSize().x / 2 &&
+		circ.getPosition().y + circ.getRadius() < rect.getPosition().y + rect.getSize().y / 2 &&
+		circ.getPosition().y + circ.getRadius() > rect.getPosition().y - rect.getSize().y / 2)
 		return true;
 	else
 		return false;
