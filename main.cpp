@@ -240,26 +240,30 @@ void Update()
 				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y + bricks[i]->picture.getSize().y / 2 + ball.picture.getRadius() + 0.1f);
 				if (bricks[i]->hit())
 					{
-					int i = rand() % 5;
-					if (i == 1) {
-						ball.speed = 800.f;
-						cout << "Funciona 1" << endl;
+					int i = rand() % 20;
+					if (i == 0) {
+						ball.speed = 1000.f;
+
+					}
+					else if (i == 1) {
+						ball.speed = 100.f;
+
 					}
 					else if (i == 2) {
 						ball.speed = 500.f;
-						cout << "Funciona 2" << endl;
+
 					}
 					else if (i == 3) {
-						ball.speed = 1000.f;
-						cout << "Funciona 3" << endl;
+						paddle.setSize(210, 35);
+
 					}
 					else if (i == 4) {
-						ball.speed = 100.f;
-						cout << "Funciona 4" << endl;
+						paddle.setSize(150, 35);
+
 					}
-					else if (i == 0) {
-						paddle.setSize(200, 35);
-						cout << "Funciona 5" << endl;
+					else if (i == 5) {
+						paddle.setSize(75, 35);
+
 					}
 						score = score + 10;					
 					}
@@ -276,28 +280,32 @@ void Update()
 				ball.setPosition(ball.picture.getPosition().x, bricks[i]->picture.getPosition().y - bricks[i]->picture.getSize().y / 2 - ball.picture.getRadius() - 0.1f);
 				if (bricks[i]->hit())
 				{
-					int i = rand() % 5;
-					if (i == 1) {
-						ball.speed = 800.f;
-						cout << "Funciona 1" << endl;
+					int i = rand() % 20;
+					if (i == 0) {
+						ball.speed = 1000.f;
+
+					}
+					else if (i == 1) {
+						ball.speed = 100.f;
+
 					}
 					else if (i == 2) {
 						ball.speed = 500.f;
-						cout << "Funciona 2" << endl;
+
 					}
 					else if (i == 3) {
-						ball.speed = 1000.f;
-						cout << "Funciona 3" << endl;
+						paddle.setSize(210, 35);
+
 					}
 					else if (i == 4) {
-						ball.speed = 100.f;
-						cout << "Funciona 4" << endl;
+						paddle.setSize(150, 35);
+
 					}
-					else if (i == 0) {
-						paddle.setSize(200, 35);
-						cout << "Funciona 5" << endl;
+					else if (i == 5) {
+						paddle.setSize(75, 35);
+
 					}
-					cout << i << endl;
+					
 					score = score + 10;
 				}
 				else
@@ -311,27 +319,33 @@ void Update()
 				ball.setPosition(bricks[i]->picture.getPosition().x + ball.picture.getRadius() + bricks[i]->picture.getSize().x / 2 + 0.1f, ball.picture.getPosition().y);
 				if (bricks[i]->hit())
 				{
-					int i = rand() % 5;
-					if (i == 1) {
-						ball.speed = 800.f;
-						cout << "Funciona 1" << endl;
+					int i = rand() % 20;
+					if (i == 0) {
+						ball.speed = 1000.f;
+												
+					}
+					else if (i == 1) {
+						ball.speed = 100.f;
+						
 					}
 					else if (i == 2) {
 						ball.speed = 500.f;
-						cout << "Funciona 2" << endl;
+						
 					}
 					else if (i == 3) {
-						ball.speed = 1000.f;
-						cout << "Funciona 3" << endl;
+						paddle.setSize(210, 35);
+						
 					}
 					else if (i == 4) {
-						ball.speed = 100.f;
-						cout << "Funciona 4" << endl;
+						paddle.setSize(150, 35);
+					
 					}
-					else if (i == 0) {
-						paddle.setSize(200, 35);
-						cout << "Funciona 5" << endl;
+					else if (i == 5) {
+						paddle.setSize(75, 35);
+						
 					}
+					
+					
 					score = score + 10;
 				}
 				else
@@ -345,26 +359,30 @@ void Update()
 				ball.setPosition(bricks[i]->picture.getPosition().x - ball.picture.getRadius() - bricks[i]->picture.getSize().x / 2 - 0.1f, ball.picture.getPosition().y);
 				if (bricks[i]->hit())
 				{
-					int i = rand() % 5;
-					if (i == 1) {
-						ball.speed = 800.f;
-						cout << "Funciona 1" << endl;
+					int i = rand() % 20;
+					if (i == 0) {
+						ball.speed = 1000.f;
+
+					}
+					else if (i == 1) {
+						ball.speed = 100.f;
+
 					}
 					else if (i == 2) {
 						ball.speed = 500.f;
-						cout << "Funciona 2" << endl;
+
 					}
 					else if (i == 3) {
-						ball.speed = 1000.f;
-						cout << "Funciona 3" << endl;
+						paddle.setSize(210, 35);
+
 					}
 					else if (i == 4) {
-						ball.speed = 100.f;
-						cout << "Funciona 4" << endl;
+						paddle.setSize(150, 35);
+
 					}
-					else if (i == 0) {
-						paddle.setSize(50, 35);
-						cout << "Funciona 5" << endl;
+					else if (i == 5) {
+						paddle.setSize(75, 35);
+
 					}
 					score = score + 10;
 				}

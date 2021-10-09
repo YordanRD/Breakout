@@ -1,6 +1,4 @@
-﻿  Ball.cpp
-  Brick.cpp
-  main.cpp
+﻿  main.cpp
 C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(84,38): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
 C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(84,26): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
 C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(183,11): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
@@ -9,16 +7,13 @@ C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(183,11): warning C42
               T=float
           ]
 C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(218,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(386,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(410,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(448,22): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(459,56): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(404,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(428,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(466,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(477,56): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(544,20): warning C4018: '<': no coinciden signed/unsigned
-  Paddle.cpp
-  Generando código...
-  LINK : no se encontró C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\Debug\Breakout.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(562,20): warning C4018: '<': no coinciden signed/unsigned
   Breakout.vcxproj -> C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\Debug\Breakout.exe
