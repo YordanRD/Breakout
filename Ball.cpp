@@ -1,6 +1,8 @@
 #include "Ball.h"
 
-
+/**@brief
+* Se inicializa la pelota dandole un color de fondo
+*/
 void Ball::initiate()
 {
 	picture.setFillColor(sf::Color::White);
