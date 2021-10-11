@@ -171,9 +171,9 @@ void Update()
 		}
 		balls[i]->angle = fmod(balls[i]->angle, 2 * pi);
 
+		
 		float factor = balls[i]->speed * deltaTime;
 		balls[i]->picture.move(std::cos(balls[i]->angle) * factor, std::sin(balls[i]->angle) * factor);
-
 		//Fisicas
 		//Bordes
 		if (balls[i]->picture.getPosition().y + balls[i]->picture.getRadius() > frameHeight)
@@ -250,12 +250,19 @@ void Update()
 
 		}
 		//Bloques
+		
 		for (int j = 0; j < bricks.size(); ++j)
-		{
+		{	
 			if (bricks[j]->enable)
-			{			
-					if (BallUp(bricks[j]->picture, balls[i]->picture))
-					{
+			{
+				if (BallUp(bricks[j]->picture, balls[i]->picture))
+				{	
+					if (deep != 0) {
+						balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y - bricks[j]->picture.getSize().y / 2 - balls[i]->picture.getRadius() - 0.1f);
+						deep--;
+					}
+
+					else if (deep == 0) {
 						balls[i]->angle = -balls[i]->angle;
 						balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y + bricks[j]->picture.getSize().y / 2 + balls[i]->picture.getRadius() + 0.1f);
 						if (bricks[j]->hit())
@@ -263,9 +270,8 @@ void Update()
 							// Primer rebote
 							int x;
 							if (balls.size() == 3 && life == 3) {
-								//bool not2 = false;
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -274,7 +280,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -283,7 +289,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -291,8 +297,9 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 30;
+								x = rand() % 10;
 							}
+
 							if (x == 0) {
 								life++;
 								paddleSize = paddleSize + 30;
@@ -328,12 +335,10 @@ void Update()
 								paddle.setSize(75, 35);
 							}
 							else if (x == 8) {
-								deep++;
+								deep = 3;
 							}
 
-
-
-							cout << i << endl;
+							cout << "Xvalue: " << x << endl;
 							score = score + 10;
 						}
 						else
@@ -341,19 +346,24 @@ void Update()
 							score = score + 5;
 						}
 
-
 					}
-					else if (BallBottom(bricks[j]->picture, balls[i]->picture))
-					{
+					
+				}
+				else if (BallBottom(bricks[j]->picture, balls[i]->picture))
+				{	
+					if (deep != 0) {
+						balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y + bricks[j]->picture.getSize().y / 2 + balls[i]->picture.getRadius() + 0.1f);
+						deep--;
+					}
+					else if (deep == 0) {
 						balls[i]->angle = -balls[i]->angle;
 						balls[i]->setPosition(balls[i]->picture.getPosition().x, bricks[j]->picture.getPosition().y - bricks[j]->picture.getSize().y / 2 - balls[i]->picture.getRadius() - 0.1f);
 						if (bricks[j]->hit())
 						{
 							int x;
 							if (balls.size() == 3 && life == 3) {
-								//bool not2 = false;
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -362,7 +372,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -371,7 +381,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -379,7 +389,7 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 30;
+								x = rand() % 10;
 							}
 							if (x == 0) {
 								life++;
@@ -416,31 +426,30 @@ void Update()
 								paddle.setSize(75, 35);
 							}
 							else if (x == 8) {
-								deep++;
+								deep = 3;
 							}
 
-
-
-							cout << i << endl;
+							cout << "XValue: " << x << endl;
 							score = score + 10;
-						
+
 						}
 						else
 						{
 							score = score + 5;
 						}
 					}
-					else if (BallLeft(bricks[j]->picture, balls[i]->picture))
-					{
+				}
+				else if (BallLeft(bricks[j]->picture, balls[i]->picture))
+				{	
+					if (deep == 0) {
 						balls[i]->angle = pi - balls[i]->angle;
-						balls[i]->setPosition(bricks[j]->picture.getPosition().x + balls[i]->picture.getRadius() + bricks[j]->picture.getSize().x / 2 + 0.1f, balls[i]->picture.getPosition().y);
+						balls[i]->setPosition(bricks[j]->picture.getPosition().x - balls[i]->picture.getRadius() - bricks[j]->picture.getSize().x / 2 + 0.1f, balls[i]->picture.getPosition().y);
 						if (bricks[i]->hit())
 						{
 							int x;
 							if (balls.size() == 3 && life == 3) {
-								//bool not2 = false;
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -449,7 +458,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -458,7 +467,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -466,7 +475,7 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 30;
+								x = rand() % 10;
 							}
 							if (x == 0) {
 								life++;
@@ -503,7 +512,7 @@ void Update()
 								paddle.setSize(75, 35);
 							}
 							else if (x == 8) {
-								deep++;
+								deep = 3;
 							}
 
 
@@ -516,17 +525,18 @@ void Update()
 							score = score + 5;
 						}
 					}
-					else if (BallRight(bricks[j]->picture, balls[i]->picture))
-					{
+				}
+				else if (BallRight(bricks[j]->picture, balls[i]->picture))
+				{	
+					if (deep == 0) {
 						balls[i]->angle = pi - balls[i]->angle;
-						balls[i]->setPosition(bricks[j]->picture.getPosition().x - balls[i]->picture.getRadius() - bricks[j]->picture.getSize().x / 2 - 0.1f, balls[i]->picture.getPosition().y);
+						balls[i]->setPosition(bricks[j]->picture.getPosition().x + balls[i]->picture.getRadius() + bricks[j]->picture.getSize().x / 2 - 0.1f, balls[i]->picture.getPosition().y);
 						if (bricks[i]->hit())
 						{
 							int x;
 							if (balls.size() == 3 && life == 3) {
-								//bool not2 = false;
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -535,7 +545,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -544,7 +554,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 30;
+									int possX = rand() % 10;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -552,7 +562,7 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 30;
+								x = rand() % 10;
 							}
 							if (x == 0) {
 								life++;
@@ -589,9 +599,8 @@ void Update()
 								paddle.setSize(75, 35);
 							}
 							else if (x == 8) {
-								deep++;
+								deep = 3;
 							}
-
 
 
 							cout << i << endl;
@@ -602,6 +611,7 @@ void Update()
 							score = score + 5;
 						}
 					}
+				}
 			}
 		}
 
@@ -629,6 +639,7 @@ void Update()
 		lifeText.setString("Vida:" + std::to_string(life));
 		scoreText.setString("Puntuación:" + std::to_string(score));
 	}
+	
 }
 
 /**@brief
