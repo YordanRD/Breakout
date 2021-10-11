@@ -77,6 +77,12 @@ bool BallRight(RectangleShape rect, CircleShape circ);
 bool BallUp(RectangleShape rect, CircleShape circ);
 bool BallBottom(RectangleShape rect, CircleShape circ);
 
+/**@brief
+* Esta funcion se encarga de iniciar el juego, crea la ventana donde todo va a ocurrir y comienza a iniciar 
+* las diferentes funciones que ocurren en el juego
+* 
+* 
+*/
 int main()
 {
 
@@ -124,7 +130,7 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-/**
+/**@brief
 * Inicializa las imagenes y textos necesarios para el correcto funcionamiento del juego
 */
 void Initiate()
@@ -157,7 +163,9 @@ void Initiate()
 
 }
 
-/***/
+/**@brief
+* Reinicia la posicion del balon
+*/
 void Reset()
 {
 	for (int i = 0; i < balls.size(); i++) {
@@ -167,7 +175,7 @@ void Reset()
 
 }
 
-/**
+/**@brief
 * M�todo que actualiza el estado de las partes del juego en pantalla
 * En caso de que la bola no est� colisionando con nada la hace seguir su movimiento
 * En caso de chocar con la barra del jugador cambia su direcci�n y angulo
@@ -655,7 +663,7 @@ void Update()
 	
 }
 
-/**
+/**@brief
 * Actualiza los elementos graficos de cada parte del juego, bloques, las bolas y la barra del jugador
 * As� como el puntaje una ves que los datos son actualizados en Update
 */
@@ -699,7 +707,8 @@ void Render()
 	window.display();
 }
 
-/**Se encarga de recibir las se�ales de las teclas o el mouse utilizadas por el jugador para poder 
+/**@brief
+*Se encarga de recibir las se�ales de las teclas o el mouse utilizadas por el jugador para poder 
 * interactuar con el juego 
 */
 void HandleInput()
@@ -793,7 +802,7 @@ void HandleInput()
 
 }
 
-/**
+/**@brief
 * Se encarga de dar valores a cada una de las variables o atributos importantes que requiere el juego
 * Se encarga de posicionar las partes del juego para que sean renderizadas y presentadas al usuario.
 */
@@ -875,7 +884,10 @@ void loadLevel()
 
 }
 
-/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie izquierdo*/
+/**@brief
+* 
+*Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie izquierdo
+*/
 bool BallLeft(RectangleShape rect, CircleShape circ)
 {
 	if (circ.getPosition().x + circ.getRadius() > rect.getPosition().x - rect.getSize().x / 2 &&
@@ -887,7 +899,10 @@ bool BallLeft(RectangleShape rect, CircleShape circ)
 		return false;
 }
 
-/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie derecha*/
+/**@brief
+* 
+*Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie derecha
+*/
 bool BallRight(RectangleShape rect, CircleShape circ)
 {
 	if (circ.getPosition().x - circ.getRadius() > rect.getPosition().x - rect.getSize().x / 2 &&
@@ -899,7 +914,10 @@ bool BallRight(RectangleShape rect, CircleShape circ)
 		return false;
 }
 
-/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie superior*/
+/**@brief
+* 
+*Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie superior
+*/
 bool BallUp(RectangleShape rect, CircleShape circ)
 {
 	if (circ.getPosition().x + circ.getRadius() >= rect.getPosition().x - rect.getSize().x / 2 &&
@@ -911,7 +929,10 @@ bool BallUp(RectangleShape rect, CircleShape circ)
 		return false;
 }
 
-/**Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie inferior*/
+/**@brief
+* 
+* Determina si una bola esta colisionando con un bloque o con la barra en un punto de tangencia ubicado en su superficie inferior
+*/
 bool BallBottom(RectangleShape rect, CircleShape circ)
 {
 	if (circ.getPosition().x + circ.getRadius() >= rect.getPosition().x - rect.getSize().x / 2 &&

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  main.cpp
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(98,39): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(98,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
@@ -6,10 +7,23 @@ C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(163,20): warning C4018:
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(180,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(202,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(231,12): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+=======
+﻿  Ball.cpp
+  Brick.cpp
+  Paddle.cpp
+  main.cpp
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(92,38): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(92,26): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(150,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(167,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(189,20): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(218,12): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
+>>>>>>> main
           with
           [
               T=float
           ]
+<<<<<<< HEAD
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(267,21): warning C4018: '<': signed/unsigned mismatch
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(319,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(410,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -21,13 +35,37 @@ C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(672,20): warning C4018:
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(713,22): warning C4018: '<': signed/unsigned mismatch
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(720,22): warning C4018: '<': signed/unsigned mismatch
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(731,56): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+=======
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(254,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(306,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(397,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(483,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(570,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(626,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(654,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(659,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(701,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(708,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(719,56): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+>>>>>>> main
           with
           [
               T=float
           ]
+<<<<<<< HEAD
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(735,23): warning C4018: '<': signed/unsigned mismatch
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(763,22): warning C4018: '<': signed/unsigned mismatch
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(810,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(814,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(832,20): warning C4018: '<': signed/unsigned mismatch
   Breakout.vcxproj -> C:\Users\fantu\Documents\GitClones\BreakoutGame\Debug\Breakout.exe
+=======
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(723,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(751,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(798,17): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(802,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\main.cpp(820,20): warning C4018: '<': no coinciden signed/unsigned
+  Generando código...
+  LINK : no se encontró C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\Debug\Breakout.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+  Breakout.vcxproj -> C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout\Debug\Breakout.exe
+>>>>>>> main
