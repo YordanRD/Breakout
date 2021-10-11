@@ -1,38 +1,33 @@
-﻿  Ball.cpp
-  Brick.cpp
-  main.cpp
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(98,39): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(98,27): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(89,23): warning C4101: 'mode': variable local sin referencia
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(163,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(180,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(202,20): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(231,12): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
+﻿  main.cpp
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(101,39): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(101,27): warning C4244: 'argumento': conversión de 'float' a 'unsigned int'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(92,23): warning C4101: 'mode': variable local sin referencia
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(169,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(186,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(208,20): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(237,12): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(267,21): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(319,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(410,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(496,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(583,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(639,21): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(667,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(672,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(713,22): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(720,22): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(731,56): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(273,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(325,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(417,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(504,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(592,24): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(649,21): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(677,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(682,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(724,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(731,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(742,56): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(735,23): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(763,22): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(810,17): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(814,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(832,20): warning C4018: '<': no coinciden signed/unsigned
-  Paddle.cpp
-  Generando código...
-  LINK : no se encontró C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\Debug\Breakout.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(746,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(774,22): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(821,17): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(825,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\main.cpp(843,20): warning C4018: '<': no coinciden signed/unsigned
   Breakout.vcxproj -> C:\Users\Tutor\OneDrive\Documentos\GitHub\Breakout2\Debug\Breakout.exe

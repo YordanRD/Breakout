@@ -290,7 +290,7 @@ void Update()
 							int x;
 							if (balls.size() == 3 && life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -299,7 +299,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -308,7 +308,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -316,7 +316,7 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 10;
+								x = rand() % 18;
 							}
 
 							if (x == 0) {
@@ -337,6 +337,7 @@ void Update()
 								ball->speed = 500.f;
 								ball->picture.setTexture(&textureBall);
 								balls.push_back(ball);
+								life++;
 							}
 							else if (x == 3) {
 								balls[i]->speed = 500.f;
@@ -382,7 +383,7 @@ void Update()
 							int x;
 							if (balls.size() == 3 && life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -391,7 +392,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -400,7 +401,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -408,7 +409,7 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 10;
+								x = rand() % 18;
 							}
 							if (x == 0) {
 								life++;
@@ -428,6 +429,7 @@ void Update()
 								ball->speed = 500.f;
 								ball->picture.setTexture(&textureBall);
 								balls.push_back(ball);
+								life++;
 							}
 							else if (x == 3) {
 								balls[i]->speed = 500.f;
@@ -468,7 +470,7 @@ void Update()
 							int x;
 							if (balls.size() == 3 && life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -477,7 +479,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -486,7 +488,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -494,7 +496,7 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 10;
+								x = rand() % 18;
 							}
 							if (x == 0) {
 								life++;
@@ -514,6 +516,7 @@ void Update()
 								ball->speed = 500.f;
 								ball->picture.setTexture(&textureBall);
 								balls.push_back(ball);
+								life++;
 							}
 							else if (x == 3) {
 								balls[i]->speed = 500.f;
@@ -555,7 +558,7 @@ void Update()
 							int x;
 							if (balls.size() == 3 && life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2 && possX != 0) {
 										x = possX;
 										break;
@@ -564,7 +567,7 @@ void Update()
 							}
 							else if (balls.size() == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 2) {
 										x = possX;
 										break;
@@ -573,7 +576,7 @@ void Update()
 							}
 							else if (life == 3) {
 								while (true) {
-									int possX = rand() % 10;
+									int possX = rand() % 18;
 									if (possX != 0) {
 										x = possX;
 										break;
@@ -581,7 +584,7 @@ void Update()
 								}
 							}
 							else {
-								x = rand() % 10;
+								x = rand() % 18;
 							}
 							if (x == 0) {
 								life++;
@@ -601,6 +604,7 @@ void Update()
 								ball->speed = 500.f;
 								ball->picture.setTexture(&textureBall);
 								balls.push_back(ball);
+								life++;
 							}
 							else if (x == 3) {
 								balls[i]->speed = 500.f;
