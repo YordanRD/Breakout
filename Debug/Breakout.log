@@ -1,32 +1,33 @@
 ﻿  main.cpp
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(86,38): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(86,26): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(142,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(159,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(181,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(210,12): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(98,39): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(98,27): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(89,23): warning C4101: 'mode': unreferenced local variable
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(163,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(180,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(202,20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(231,12): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(246,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(298,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(389,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(475,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(562,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(618,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(646,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(651,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(692,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(699,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(710,56): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(267,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(319,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(410,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(496,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(583,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(639,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(667,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(672,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(713,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(720,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(731,56): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(714,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(742,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(789,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(793,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(811,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(735,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(763,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(810,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(814,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\fantu\Documents\GitClones\BreakoutGame\main.cpp(832,20): warning C4018: '<': signed/unsigned mismatch
   Breakout.vcxproj -> C:\Users\fantu\Documents\GitClones\BreakoutGame\Debug\Breakout.exe

@@ -1,6 +1,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Network.hpp>
 #include <vector>
 #include <math.h>
 #include <stdlib.h>
@@ -50,7 +51,6 @@ int deep = 0;
 
 int paddleSize;
 
-
 const float startposX = 55;
 const float startposY = 70;
 
@@ -83,21 +83,42 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF |
 		_CRTDBG_LEAK_CHECK_DF);
 
-	window.create(VideoMode(frameWidth, frameHeight), "Breakout");
-	Initiate();
-	loadLevel();
-	while (window.isOpen())
-	{
+	sf::IpAddress ip = sf::IpAddress::getLocalAddress();
+	sf::TcpSocket socket;
 
-		deltaTime = gameClock.restart().asSeconds();
-		HandleInput();
+	char connectionType, mode;
 
-		if (isPlaying && !gameover && !win)
+	std::cout << "(s) si es servidor, (c) si es cliente" << std::endl;
+	cin >> connectionType;
+
+	if (connectionType == 's') {
+
+		srand((unsigned)(time(NULL)));
+
+		window.create(VideoMode(frameWidth, frameHeight), "Breakout");
+		Initiate();
+		loadLevel();
+		while (window.isOpen())
 		{
-			Update();
+
+			deltaTime = gameClock.restart().asSeconds();
+			HandleInput();
+
+			if (isPlaying && !gameover && !win)
+			{
+				Update();
+			}
+
+			Render();
 		}
 
-		Render();
+		sf::TcpListener listener;
+		listener.listen(2000);
+		listener.accept(socket);
+	}
+
+	else if (connectionType == 'c') {
+		socket.connect(ip, 2000);
 	}
 
 	return EXIT_SUCCESS;
@@ -611,7 +632,7 @@ void Update()
 		{
 			gameover = true;
 
-			gameoverText.setString("Juego acabado, presiona \"Enter\" para reiniciar");
+			gameoverText.setString("Juego acabado, presiona \n \"Enter \" \n para reiniciar");
 		}
 
 		int count = 0;
